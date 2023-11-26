@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "./ui/use-toast";
 
 const formSchema = z.object({
-  username: z.string().min(2).max(50),
+  email: z.string().email("Email invalido"),
 });
 
 export function EmailForm() {
@@ -25,17 +25,18 @@ export function EmailForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
+      email: "",
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     toast({
-      title: "You submit the following values:",
+      title: "Tu mensaje ha sido enviado",
       description: (
-        <pre>
-          <code>Hola mundo</code>
-        </pre>
+        // <pre>
+        //   <code>Hola mundo</code>
+        // </pre>
+        <></>
       ),
     });
     console.log(values);
@@ -46,21 +47,21 @@ export function EmailForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
-          name="username"
+          name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel className="text-xs">Username</FormLabel>
               <FormControl>
                 <Input placeholder="shadcn" {...field} />
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">
+        <Button
+          type="submit"
+          className="w-full bg-gradient-to-r from-rose-500 to-orange-500 shadow-xl"
+        >
           Submit
         </Button>
       </form>
